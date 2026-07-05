@@ -2,6 +2,7 @@ import { FormEvent, useState } from "react";
 import { BookmarkSimple, ChatCircle, Heart, ImageSquare, PaperPlaneTilt, Sparkle } from "@phosphor-icons/react";
 import { LikeFlowerBurst } from "../motion/LikeFlowerBurst";
 import { useToast } from "../feedback/ToastProvider";
+import { IdentityAvatar } from "../appearance/IdentityAvatar";
 
 type Post = {
   id: number;
@@ -65,7 +66,7 @@ export function MomentsPage() {
           <h3>今天也有一点回声</h3>
         </div>
         <div className="moment-profile">
-          <div className="tiny-avatar">AI</div>
+          <IdentityAvatar identity="ai" className="tiny-avatar" />
           <span>ta</span>
         </div>
       </section>
@@ -74,7 +75,7 @@ export function MomentsPage() {
         {posts.map((post) => (
           <article className="moment-post glass-card" data-level="2" key={post.id}>
             <div className="moment-author">
-              <div className="tiny-avatar">AI</div>
+              <IdentityAvatar identity="ai" className="tiny-avatar" />
               <div>
                 <h3>{post.name}</h3>
                 <p>{post.time}</p>

@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { BookmarkSimple, EnvelopeOpen, EnvelopeSimple, Heart, PaperPlaneTilt } from "@phosphor-icons/react";
+import { BookmarkSimple, EnvelopeSimple, Heart, PaperPlaneTilt } from "@phosphor-icons/react";
 import { useToast } from "../feedback/ToastProvider";
+import { IdentityAvatar } from "../appearance/IdentityAvatar";
 
 type Letter = {
   id: number;
@@ -82,6 +83,7 @@ export function MailboxPage() {
       <div className="today-subpage letter-reader-page">
         <button className="secondary-action compact theme-pressable" onClick={() => setSelectedId(null)}>返回信箱</button>
         <article className="letter-paper glass-card" data-level="1">
+          <IdentityAvatar identity="ai" className="tiny-avatar letter-avatar" />
           <p className="card-kicker">{selected.kind}来信 · {selected.date}</p>
           <h3>{selected.title}</h3>
           <span>来自 {selected.from}</span>
@@ -117,7 +119,7 @@ export function MailboxPage() {
       <div className="letter-list">
         {letters.map((letter) => (
           <button className="letter-row glass-card theme-pressable" data-unread={letter.unread} data-level="2" key={letter.id} onClick={() => openLetter(letter.id)}>
-            {letter.unread ? <EnvelopeSimple size={22} /> : <EnvelopeOpen size={22} />}
+            <IdentityAvatar identity="ai" className="message-avatar" />
             <span>
               <strong>{letter.title}</strong>
               <small>{letter.from} · {letter.date} · {letter.kind}</small>

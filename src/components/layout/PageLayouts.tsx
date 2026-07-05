@@ -21,10 +21,11 @@ import type { FeatureGroup, IconType, ManagePageId, PageId } from "../../types";
 import { HeroCareCard } from "../cards/HeroCard";
 import { FeatureCard } from "../cards/FeatureCard";
 import { MusicVinylCard } from "../cards/MusicVinylCard";
+import { IdentityAvatar } from "../appearance/IdentityAvatar";
 
 type LayoutProps = {
   features: FeatureGroup[];
-  todayTheme?: "aurora-dark" | "aurora-light";
+  todayTheme?: "aurora-light";
   onOpen: (group: FeatureGroup) => void;
   onOpenChat: () => void;
   onOpenMoments: () => void;
@@ -69,7 +70,7 @@ export function TodayLayout({
   onOpenMailbox,
   onOpenMood,
   onOpenQuick,
-  todayTheme = "aurora-dark",
+  todayTheme = "aurora-light",
 }: LayoutProps) {
   return (
     <div className="layout-today today-real-app today-page airy-layout" data-theme={todayTheme}>
@@ -145,7 +146,7 @@ export function TodayLayout({
   );
 }
 
-export function CompanionLayout({ features, onOpen, onOpenMoments, todayTheme = "aurora-dark" }: LayoutProps) {
+export function CompanionLayout({ features, onOpen, onOpenMoments, todayTheme = "aurora-light" }: LayoutProps) {
   const musicFeature = features.find((feature) => feature.id === "listen-music");
   const lifeFeature = features.find((feature) => feature.id === "life");
   const funFeature = features.find((feature) => feature.id === "fun");
@@ -168,7 +169,7 @@ export function CompanionLayout({ features, onOpen, onOpenMoments, todayTheme = 
   );
 }
 
-export function MemoryLayout({ features, onOpen, todayTheme = "aurora-dark" }: LayoutProps) {
+export function MemoryLayout({ features, onOpen, todayTheme = "aurora-light" }: LayoutProps) {
   const [writing, setWriting] = useState(false);
   const [saved, setSaved] = useState(window.localStorage.getItem("vp-letter-saved") === "true");
 
@@ -250,11 +251,11 @@ const manageEntries: Array<{ id: ManagePageId; title: string; subtitle: string; 
   { id: "system", title: "系统设置", subtitle: "账户、同步、权限", icon: SlidersHorizontal },
 ];
 
-export function ManageLayout({ onOpenManage, todayTheme = "aurora-dark" }: LayoutProps) {
+export function ManageLayout({ onOpenManage, todayTheme = "aurora-light" }: LayoutProps) {
   return (
     <div className="layout-manage manage-page airy-layout" data-theme={todayTheme}>
       <button className="profile-card profile-card-button glass-card theme-pressable" data-level="1" onClick={() => onOpenManage("profile")}>
-        <div className="profile-orb" aria-hidden="true" />
+        <IdentityAvatar identity="user" className="profile-orb" />
         <div>
           <strong>个人档案</strong>
           <span>头像、昵称、常用称呼</span>

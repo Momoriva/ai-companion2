@@ -9,7 +9,7 @@ export function PhoneShell({
   children: ReactNode;
   onPointerDown: (event: ReactPointerEvent<HTMLDivElement>) => void;
   onPointerUp: (event: ReactPointerEvent<HTMLDivElement>) => void;
-  auroraTheme?: "aurora-dark" | "aurora-light";
+  auroraTheme?: "aurora-light";
 }) {
   return (
     <div className="phone-shell" data-aurora-theme={auroraTheme}>

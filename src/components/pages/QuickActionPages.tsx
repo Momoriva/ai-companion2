@@ -1,6 +1,7 @@
 import { FormEvent, useEffect, useState } from "react";
 import { Microphone, Phone, Sparkle, Trash, Waveform } from "@phosphor-icons/react";
 import { useToast } from "../feedback/ToastProvider";
+import { IdentityAvatar } from "../appearance/IdentityAvatar";
 
 export function QuickActionPage({ page }: { page: "call" | "voice-note" | "ai-help" }) {
   if (page === "call") return <CallPrepPage />;
@@ -16,7 +17,7 @@ function CallPrepPage() {
   return (
     <div className="today-subpage call-page">
       <section className="call-stage glass-card" data-level="1">
-        <div className="large-avatar">AI</div>
+        <IdentityAvatar identity="ai" className="large-avatar" />
         <p className="card-kicker">通话准备</p>
         <h3>{started ? "正在等待接通" : "准备一次轻声通话"}</h3>
         <span>{micOn ? "麦克风已开启" : "麦克风已关闭"} · 普通通话</span>

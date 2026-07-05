@@ -1,7 +1,72 @@
+@font-face {
+  font-family: "WenYuan Serif SC";
+  src: url("/assets/fonts/appearance/WenYuanSerifSC-Regular.ttf") format("truetype");
+  font-display: swap;
+  font-style: normal;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "WenYuan Serif SC";
+  src: url("/assets/fonts/appearance/WenYuanSerifSC-Bold.ttf") format("truetype");
+  font-display: swap;
+  font-style: normal;
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: "AidianFengYaHeiChangTi";
+  src: url("/assets/fonts/appearance/AidianFengYaHeiChangTi.ttf") format("truetype");
+  font-display: swap;
+  font-style: normal;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "SJsuqian";
+  src: url("/assets/fonts/appearance/SJsuqian.ttf") format("truetype");
+  font-display: swap;
+  font-style: normal;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "xiaowei";
+  src: url("/assets/fonts/appearance/ZCOOLXiaoWeiLogo.otf") format("opentype");
+  font-display: swap;
+  font-style: normal;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "ChillHuoGothic F ConBold";
+  src: url("/assets/fonts/appearance/ChillHuoGothic-F-ConBold.otf") format("opentype");
+  font-display: swap;
+  font-style: normal;
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: "SyaoranThenKhung";
+  src: url("/assets/fonts/appearance/SyaoranThenKhung.ttf") format("truetype");
+  font-display: swap;
+  font-style: normal;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Yomeng Script";
+  src: url("/assets/fonts/appearance/YomengScript.otf") format("opentype");
+  font-display: swap;
+  font-style: normal;
+  font-weight: 400;
+}
+
 :root {
   --font-display: Georgia, "Times New Roman", "Noto Serif SC", serif;
   --font-body: Inter, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
   --font-utility: ui-sans-serif, Inter, "PingFang SC", system-ui, sans-serif;
+  --font-ui: var(--font-body);
   --surface-base: #f6f2ef;
   --surface-glass: rgba(255, 255, 255, 0.58);
   --surface-soft: rgba(247, 244, 241, 0.76);
@@ -52,6 +117,27 @@
   --ease-enter: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+:root[data-font-theme="font-group-1"] {
+  --font-display: "WenYuan Serif SC", "Noto Serif SC", serif;
+  --font-body: "AidianFengYaHeiChangTi", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+  --font-utility: "SJsuqian", "PingFang SC", system-ui, sans-serif;
+  --font-ui: var(--font-body);
+}
+
+:root[data-font-theme="font-group-2"] {
+  --font-display: "xiaowei", "WenYuan Serif SC", "Noto Serif SC", serif;
+  --font-body: "ChillHuoGothic F ConBold", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+  --font-utility: "SJsuqian", "PingFang SC", system-ui, sans-serif;
+  --font-ui: var(--font-body);
+}
+
+:root[data-font-theme="font-group-3"] {
+  --font-display: "SyaoranThenKhung", "WenYuan Serif SC", sans-serif;
+  --font-body: "Yomeng Script", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+  --font-utility: "SJsuqian", "PingFang SC", system-ui, sans-serif;
+  --font-ui: var(--font-body);
+}
+
 :root[data-theme="snowfield-film"] {
   --surface-base: #f4f5f3;
   --surface-glass: rgba(255, 255, 255, 0.54);
@@ -97,6 +183,67 @@ body {
 button,
 input {
   font: inherit;
+}
+
+h1,
+h2,
+h3,
+.page-heading h2,
+.hero-care-copy h3,
+.connection-ring strong,
+.music-vinyl-card h3,
+.memory-editorial-card h3,
+.letter-paper h3,
+.manage-page-title h3,
+.call-stage h3,
+.recorder-card h3,
+.help-hero h3,
+.appearance-preview strong {
+  font-family: var(--font-display);
+}
+
+body,
+button,
+input,
+textarea,
+.bubble,
+.moment-text,
+.letter-paper p,
+.sheet-copy,
+.profile-card strong,
+.manage-entry-row strong,
+.visual-option span {
+  font-family: var(--font-body);
+}
+
+small,
+time,
+label,
+input::placeholder,
+textarea::placeholder,
+.card-kicker,
+.section-label,
+.theme-pill,
+.dock-item,
+.page-indicator,
+.status-bar,
+.time-divider,
+.tag-chip,
+.prompt-chip,
+.mini-button,
+.send-button,
+.secondary-action.compact,
+.bubble small,
+.moment-author p,
+.moment-social-box p,
+.letter-row small,
+.letter-row em,
+.music-progress,
+.now-playing,
+.appearance-image-row span,
+.appearance-choice-row span,
+.upload-error {
+  font-family: var(--font-utility);
 }
 
 button {
@@ -1276,6 +1423,20 @@ input:focus-visible {
   font-weight: 720;
 }
 
+.identity-avatar {
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.identity-avatar img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  object-fit: cover;
+}
+
 .messages {
   max-height: 430px;
   display: grid;
@@ -2042,6 +2203,178 @@ input:focus-visible {
   line-height: 1.45;
 }
 
+.appearance-preview {
+  min-height: 118px;
+  justify-content: space-between;
+  overflow: hidden;
+  background-position: center;
+  background-size: cover;
+}
+
+.appearance-avatar-preview {
+  width: 46px;
+  height: 46px;
+  flex: 0 0 auto;
+  border: 1px solid var(--border-glass);
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.appearance-avatar-preview.user {
+  width: 38px;
+  height: 38px;
+}
+
+.appearance-image-row,
+.appearance-choice-row {
+  display: grid;
+  gap: 10px;
+}
+
+.appearance-choice-row > span {
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.appearance-image-row {
+  grid-template-columns: 54px 1fr;
+  align-items: center;
+  border: 1px solid var(--border-glass);
+  border-radius: 18px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.44);
+}
+
+.appearance-image-row > div:nth-child(2) {
+  display: grid;
+  gap: 4px;
+}
+
+.appearance-image-row > div:nth-child(2) span {
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.appearance-image-thumb {
+  width: 54px;
+  height: 74px;
+  border: 1px solid var(--border-glass);
+  border-radius: 14px;
+  background-position: center;
+  background-size: cover;
+}
+
+.appearance-image-thumb[data-avatar="true"] {
+  height: 54px;
+  border-radius: 50%;
+}
+
+.appearance-action-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-sm);
+}
+
+.appearance-action-row .primary-action {
+  grid-column: 1 / -1;
+}
+
+.image-upload-control {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.image-upload-control input[type="file"] {
+  display: none;
+}
+
+.upload-error {
+  width: 100%;
+  color: var(--accent-danger);
+  font-size: 12px;
+}
+
+.crop-dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483000;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(8, 11, 18, 0.28);
+  backdrop-filter: blur(12px);
+}
+
+.crop-dialog {
+  width: min(330px, 100%);
+  max-height: min(760px, calc(100dvh - 36px));
+  overflow: auto;
+  display: grid;
+  gap: 14px;
+  padding: 16px;
+}
+
+.crop-dialog-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.crop-dialog-head div {
+  display: grid;
+  gap: 4px;
+}
+
+.crop-dialog-head span {
+  max-width: 230px;
+  overflow: hidden;
+  color: var(--text-secondary);
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.crop-frame {
+  position: relative;
+  width: min(250px, 76vw);
+  max-height: 430px;
+  justify-self: center;
+  overflow: hidden;
+  border: 1px solid var(--border-glass);
+  border-radius: 18px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.06)),
+    rgba(10, 12, 18, 0.28);
+  cursor: grab;
+  touch-action: none;
+}
+
+.crop-frame:active {
+  cursor: grabbing;
+}
+
+.crop-frame[data-circular="true"] {
+  border-radius: 50%;
+}
+
+.crop-frame img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  max-width: none;
+  user-select: none;
+  will-change: transform;
+}
+
+.crop-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-sm);
+}
+
 .edit-form-grid {
   display: grid;
   gap: var(--space-sm);
@@ -2085,6 +2418,22 @@ input:focus-visible {
   background: rgba(255, 255, 255, 0.5);
   color: var(--text-primary);
   text-align: left;
+}
+
+.visual-option span {
+  display: grid;
+  gap: 4px;
+}
+
+.visual-option small {
+  color: var(--text-secondary);
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.visual-option-grid.compact {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .tag-picker,
@@ -2443,7 +2792,7 @@ input:focus-visible {
 }
 
 .chat-message-row.user {
-  grid-template-columns: minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) 30px;
   justify-items: end;
 }
 
@@ -2457,6 +2806,10 @@ input:focus-visible {
   color: var(--accent-ink);
   font-size: 11px;
   font-weight: 700;
+}
+
+.message-avatar.user-avatar {
+  border-radius: 50%;
 }
 
 .bubble {
@@ -2997,48 +3350,6 @@ input:focus-visible {
 }
 
 /* Today-only Aurora material themes. Scoped deliberately; no global variables or app-wide surfaces. */
-.today-theme-switch {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 12px;
-}
-
-.today-page[data-theme="aurora-dark"],
-.desktop-page[data-page="0"]:has(.today-page[data-theme="aurora-dark"]) {
-  --bg-base: #2f3946;
-  --bg-aurora-1: rgba(76, 130, 165, 0.52);
-  --bg-aurora-2: rgba(238, 153, 91, 0.46);
-  --bg-aurora-3: rgba(255, 191, 148, 0.32);
-  --bg-aurora-4: rgba(215, 227, 224, 0.3);
-  --ring-start: #76b9ff;
-  --ring-end: #ff9863;
-  --accent-warm: #ffbd91;
-  --accent-cool: #8cc7ff;
-  --glass-clear-bg: rgba(255, 255, 255, 0.105);
-  --glass-clear-border: rgba(255, 255, 255, 0.24);
-  --glass-clear-blur: 14px;
-  --glass-frosted-bg: rgba(255, 255, 255, 0.145);
-  --glass-frosted-border: rgba(255, 255, 255, 0.28);
-  --glass-frosted-blur: 30px;
-  --page-glow: rgba(255, 172, 102, 0.24);
-  --page-fog: rgba(214, 226, 232, 0.16);
-  --today-text: rgba(255, 255, 255, 0.92);
-  --today-text-soft: rgba(255, 255, 255, 0.68);
-  --today-text-muted: rgba(255, 255, 255, 0.48);
-  --text-primary: rgba(255, 255, 255, 0.92);
-  --text-secondary: rgba(255, 255, 255, 0.68);
-  --text-muted: rgba(255, 255, 255, 0.48);
-  --icon-primary: rgba(255, 255, 255, 0.9);
-  --icon-muted: rgba(255, 255, 255, 0.62);
-  --divider-color: rgba(255, 255, 255, 0.12);
-  --glass-border: rgba(255, 255, 255, 0.18);
-  --glass-divider: rgba(255, 255, 255, 0.1);
-  --glass-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  --today-shadow: 0 22px 56px rgba(0, 12, 28, 0.22);
-  --today-inner-dark: rgba(20, 30, 42, 0.18);
-}
-
 .today-page[data-theme="aurora-light"],
 .desktop-page[data-page="0"]:has(.today-page[data-theme="aurora-light"]) {
   --bg-base: #f3eee8;
@@ -3316,16 +3627,6 @@ input:focus-visible {
     radial-gradient(ellipse at 12% 80%, var(--bg-aurora-1, rgba(76, 130, 165, 0.28)), transparent 38%),
     radial-gradient(ellipse at 86% 88%, var(--bg-aurora-3, rgba(255, 191, 148, 0.24)), transparent 36%),
     var(--bg-base, rgba(255, 255, 255, 0.28));
-}
-
-.phone-shell:has(.desktop-page[data-page="0"][data-active="true"] .today-page[data-theme="aurora-dark"]) {
-  --bg-base: #2f3946;
-  --bg-aurora-1: rgba(76, 130, 165, 0.52);
-  --bg-aurora-2: rgba(238, 153, 91, 0.46);
-  --bg-aurora-3: rgba(255, 191, 148, 0.32);
-  --bg-aurora-4: rgba(215, 227, 224, 0.3);
-  --accent-warm: #ffbd91;
-  --today-text: rgba(255, 255, 255, 0.92);
 }
 
 .phone-shell:has(.desktop-page[data-page="0"][data-active="true"] .today-page[data-theme="aurora-light"]) {
@@ -3926,44 +4227,6 @@ input:focus-visible {
 }
 
 /* Aurora visual expansion: scoped to Companion and Today/Companion in-phone pages only. */
-.companion-page[data-theme="aurora-dark"],
-.desktop-page[data-page="1"]:has(.companion-page[data-theme="aurora-dark"]),
-.phone-page-overlay[data-aurora-scope="true"][data-theme="aurora-dark"] {
-  --bg-base: #2f3946;
-  --bg-aurora-1: rgba(76, 130, 165, 0.52);
-  --bg-aurora-2: rgba(238, 153, 91, 0.46);
-  --bg-aurora-3: rgba(255, 191, 148, 0.32);
-  --bg-aurora-4: rgba(215, 227, 224, 0.3);
-  --bg-fog: rgba(214, 226, 232, 0.16);
-  --text-primary: rgba(255, 255, 255, 0.92);
-  --text-secondary: rgba(255, 255, 255, 0.68);
-  --text-muted: rgba(255, 255, 255, 0.48);
-  --text-inverse: #263344;
-  --icon-primary: rgba(255, 255, 255, 0.9);
-  --icon-secondary: rgba(255, 255, 255, 0.72);
-  --icon-muted: rgba(255, 255, 255, 0.58);
-  --divider-color: rgba(255, 255, 255, 0.12);
-  --control-border: rgba(255, 255, 255, 0.18);
-  --control-fill: rgba(255, 255, 255, 0.105);
-  --accent-warm: #ffbd91;
-  --accent-cool: #8cc7ff;
-  --ring-start: #76b9ff;
-  --ring-end: #ff9863;
-  --glass-clear-bg: rgba(255, 255, 255, 0.105);
-  --glass-clear-border: rgba(255, 255, 255, 0.2);
-  --glass-clear-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
-  --glass-clear-blur: 12px;
-  --glass-frosted-bg: rgba(255, 255, 255, 0.14);
-  --glass-frosted-border: rgba(255, 255, 255, 0.24);
-  --glass-frosted-shadow: 0 3px 10px rgba(0, 0, 0, 0.07);
-  --glass-frosted-blur: 22px;
-  --glass-edge-glow: rgba(196, 214, 235, 0.12);
-  --glass-edge-warm: rgba(235, 180, 154, 0.08);
-  --dock-bg: rgba(255, 255, 255, 0.06);
-  --dock-rib-light: rgba(255, 255, 255, 0.13);
-  --dock-rib-dark: rgba(22, 28, 38, 0.05);
-}
-
 .companion-page[data-theme="aurora-light"],
 .desktop-page[data-page="1"]:has(.companion-page[data-theme="aurora-light"]),
 .phone-page-overlay[data-aurora-scope="true"][data-theme="aurora-light"] {
@@ -4163,22 +4426,6 @@ input:focus-visible {
   opacity: 0.72;
 }
 
-.phone-shell[data-aurora-theme="aurora-dark"]:has(:is(.desktop-page[data-page="0"][data-active="true"] .today-page[data-theme], .desktop-page[data-page="1"][data-active="true"] .companion-page[data-theme], .phone-page-overlay[data-aurora-scope="true"])) {
-  --bg-base: #2f3946;
-  --bg-aurora-1: rgba(76, 130, 165, 0.52);
-  --bg-aurora-2: rgba(238, 153, 91, 0.46);
-  --bg-aurora-3: rgba(255, 191, 148, 0.32);
-  --bg-aurora-4: rgba(215, 227, 224, 0.3);
-  --text-primary: rgba(255, 255, 255, 0.92);
-  --glass-clear-bg: rgba(255, 255, 255, 0.105);
-  --glass-clear-border: rgba(255, 255, 255, 0.2);
-  --glass-clear-blur: 12px;
-  --accent-warm: #ffbd91;
-  --dock-bg: rgba(255, 255, 255, 0.06);
-  --dock-rib-light: rgba(255, 255, 255, 0.13);
-  --dock-rib-dark: rgba(22, 28, 38, 0.05);
-}
-
 .phone-shell[data-aurora-theme="aurora-light"]:has(:is(.desktop-page[data-page="0"][data-active="true"] .today-page[data-theme], .desktop-page[data-page="1"][data-active="true"] .companion-page[data-theme], .phone-page-overlay[data-aurora-scope="true"])) {
   --bg-base: #f3eee8;
   --bg-aurora-1: rgba(172, 206, 231, 0.58);
@@ -4241,23 +4488,6 @@ input:focus-visible {
 }
 
 /* Final whole-site Aurora closeout: Memory, Manage, global overlays, toast, and controls. */
-.app-shell[data-aurora-theme="aurora-dark"] {
-  --text-primary: rgba(255, 255, 255, 0.92);
-  --text-secondary: rgba(255, 255, 255, 0.68);
-  --text-muted: rgba(255, 255, 255, 0.48);
-  --focus-ring: rgba(140, 199, 255, 0.42);
-  --accent-warm: #ffbd91;
-  --accent-danger: #e7a0a0;
-  --glass-clear-bg: rgba(255, 255, 255, 0.105);
-  --glass-clear-border: rgba(255, 255, 255, 0.2);
-  --glass-frosted-bg: rgba(255, 255, 255, 0.14);
-  --glass-frosted-border: rgba(255, 255, 255, 0.24);
-  --glass-frosted-shadow: 0 3px 10px rgba(0, 0, 0, 0.07);
-  --glass-frosted-blur: 22px;
-  --toast-bg: rgba(38, 48, 60, 0.42);
-  --toast-border: rgba(255, 255, 255, 0.22);
-}
-
 .app-shell[data-aurora-theme="aurora-light"] {
   --text-primary: #263344;
   --text-secondary: #5e6b78;
@@ -4273,52 +4503,6 @@ input:focus-visible {
   --glass-frosted-blur: 22px;
   --toast-bg: rgba(245, 241, 235, 0.42);
   --toast-border: rgba(72, 88, 104, 0.24);
-}
-
-.memory-page[data-theme="aurora-dark"],
-.manage-page[data-theme="aurora-dark"],
-.desktop-page:is([data-page="2"], [data-page="3"]):has(:is(.memory-page[data-theme="aurora-dark"], .manage-page[data-theme="aurora-dark"])),
-.phone-page-overlay[data-aurora-scope="true"][data-theme="aurora-dark"],
-.phone-shell[data-aurora-theme="aurora-dark"] {
-  --bg-base: #2f3946;
-  --bg-aurora-1: rgba(76, 130, 165, 0.52);
-  --bg-aurora-2: rgba(238, 153, 91, 0.46);
-  --bg-aurora-3: rgba(255, 191, 148, 0.32);
-  --bg-aurora-4: rgba(215, 227, 224, 0.3);
-  --bg-fog: rgba(214, 226, 232, 0.16);
-  --text-primary: rgba(255, 255, 255, 0.92);
-  --text-secondary: rgba(255, 255, 255, 0.68);
-  --text-muted: rgba(255, 255, 255, 0.48);
-  --text-inverse: #263344;
-  --icon-primary: rgba(255, 255, 255, 0.9);
-  --icon-secondary: rgba(255, 255, 255, 0.72);
-  --icon-muted: rgba(255, 255, 255, 0.58);
-  --divider-color: rgba(255, 255, 255, 0.12);
-  --control-border: rgba(255, 255, 255, 0.18);
-  --control-fill: rgba(255, 255, 255, 0.105);
-  --focus-ring: rgba(140, 199, 255, 0.42);
-  --accent-warm: #ffbd91;
-  --accent-cool: #8cc7ff;
-  --accent-success: #8fd6a0;
-  --accent-warning: #ffd08c;
-  --accent-danger: #e7a0a0;
-  --glass-clear-bg: rgba(255, 255, 255, 0.105);
-  --glass-clear-border: rgba(255, 255, 255, 0.2);
-  --glass-clear-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
-  --glass-clear-blur: 12px;
-  --glass-frosted-bg: rgba(255, 255, 255, 0.14);
-  --glass-frosted-border: rgba(255, 255, 255, 0.24);
-  --glass-frosted-shadow: 0 3px 10px rgba(0, 0, 0, 0.07);
-  --glass-frosted-blur: 22px;
-  --glass-edge-glow: rgba(196, 214, 235, 0.12);
-  --glass-edge-warm: rgba(235, 180, 154, 0.08);
-  --dock-bg: rgba(255, 255, 255, 0.06);
-  --dock-rib-light: rgba(255, 255, 255, 0.13);
-  --dock-rib-dark: rgba(22, 28, 38, 0.05);
-  --toast-bg: rgba(38, 48, 60, 0.42);
-  --toast-border: rgba(255, 255, 255, 0.22);
-  --sheet-bg: rgba(255, 255, 255, 0.14);
-  --modal-bg: rgba(255, 255, 255, 0.14);
 }
 
 .memory-page[data-theme="aurora-light"],
@@ -4575,4 +4759,215 @@ input:focus-visible {
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
   overflow: hidden;
+}
+
+:root {
+  --appearance-desktop-overlay-color: transparent;
+  --appearance-chat-overlay-color: transparent;
+}
+
+:root[data-desktop-overlay="soft"] {
+  --appearance-desktop-overlay-color: transparent;
+}
+
+:root[data-desktop-overlay="medium"] {
+  --appearance-desktop-overlay-color: transparent;
+}
+
+:root[data-desktop-overlay="strong"] {
+  --appearance-desktop-overlay-color: transparent;
+}
+
+:root[data-chat-overlay="soft"] {
+  --appearance-chat-overlay-color: transparent;
+}
+
+:root[data-chat-overlay="medium"] {
+  --appearance-chat-overlay-color: transparent;
+}
+
+:root[data-chat-overlay="strong"] {
+  --appearance-chat-overlay-color: transparent;
+}
+
+.desktop-page {
+  background: var(--appearance-desktop-background) center / cover no-repeat !important;
+}
+
+.chat-window {
+  background: var(--appearance-chat-background) center / cover no-repeat !important;
+}
+
+.tiny-avatar,
+.message-avatar,
+.large-avatar {
+  overflow: hidden;
+  background:
+    var(--appearance-ai-avatar) center / cover no-repeat,
+    rgba(255, 255, 255, 0.56) !important;
+  color: transparent !important;
+  font-size: 0 !important;
+}
+
+.profile-orb {
+  background:
+    var(--appearance-user-avatar) center / cover no-repeat,
+    radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.96), rgba(174, 188, 255, 0.5)) !important;
+}
+
+:root {
+  --appearance-desktop-ink: rgba(248, 250, 255, 0.96);
+  --appearance-desktop-muted: rgba(232, 238, 255, 0.72);
+  --appearance-desktop-soft: rgba(232, 238, 255, 0.58);
+  --appearance-desktop-border: rgba(255, 255, 255, 0.24);
+  --appearance-desktop-frosted-bg: rgba(255, 255, 255, 0.15);
+  --appearance-desktop-clear-bg: rgba(255, 255, 255, 0.1);
+  --appearance-desktop-shadow: 0 14px 36px rgba(0, 0, 0, 0.18);
+  --appearance-chat-ink: rgba(248, 250, 255, 0.96);
+  --appearance-chat-muted: rgba(232, 238, 255, 0.72);
+  --appearance-chat-border: rgba(255, 255, 255, 0.24);
+  --appearance-chat-frosted-bg: rgba(255, 255, 255, 0.16);
+  --appearance-chat-clear-bg: rgba(255, 255, 255, 0.1);
+  --appearance-chat-user-bubble: rgba(235, 241, 255, 0.2);
+  --appearance-chat-ai-bubble: rgba(255, 255, 255, 0.16);
+  --appearance-chat-input-bg: rgba(255, 255, 255, 0.14);
+  --appearance-chat-shadow: 0 12px 34px rgba(0, 0, 0, 0.16);
+}
+
+:root[data-desktop-contrast-mode="dark-content"],
+:root[data-desktop-background-tone="light"][data-desktop-contrast-mode="auto"] {
+  --appearance-desktop-ink: rgba(24, 32, 46, 0.96);
+  --appearance-desktop-muted: rgba(39, 49, 68, 0.72);
+  --appearance-desktop-soft: rgba(47, 58, 78, 0.58);
+  --appearance-desktop-border: rgba(21, 34, 52, 0.18);
+  --appearance-desktop-frosted-bg: rgba(30, 43, 64, 0.088);
+  --appearance-desktop-clear-bg: rgba(30, 43, 64, 0.066);
+  --appearance-desktop-shadow: 0 8px 22px rgba(30, 42, 62, 0.1);
+}
+
+:root[data-chat-contrast-mode="dark-content"],
+:root[data-chat-background-tone="light"][data-chat-contrast-mode="auto"] {
+  --appearance-chat-ink: rgba(24, 32, 46, 0.96);
+  --appearance-chat-muted: rgba(39, 49, 68, 0.72);
+  --appearance-chat-border: rgba(21, 34, 52, 0.18);
+  --appearance-chat-frosted-bg: rgba(30, 43, 64, 0.09);
+  --appearance-chat-clear-bg: rgba(30, 43, 64, 0.066);
+  --appearance-chat-user-bubble: rgba(82, 99, 238, 0.16);
+  --appearance-chat-ai-bubble: rgba(255, 255, 255, 0.46);
+  --appearance-chat-input-bg: rgba(255, 255, 255, 0.42);
+  --appearance-chat-shadow: 0 8px 22px rgba(30, 42, 62, 0.1);
+}
+
+.desktop-page :is(.page-heading h2, .page-heading p, .page-heading svg),
+.desktop-page :is(.today-page, .companion-page, .memory-page, .manage-page) :is(h3, p, span, small, strong, em, time, button, svg, textarea) {
+  color: var(--appearance-desktop-ink);
+}
+
+.desktop-page :is(.page-heading p, .card-kicker, .section-label, small, time, em, .profile-card span, .manage-entry-row small, .memory-timeline-row time, .filmstrip-item span) {
+  color: var(--appearance-desktop-muted);
+}
+
+.desktop-page :is(.glass-card[data-level="1"], .hero-care-card, .connection-ring, .music-vinyl-card, .memory-editorial-card, .memory-timeline-section, .profile-card, .manage-section-list) {
+  border-color: var(--appearance-desktop-border);
+  background: var(--appearance-desktop-frosted-bg);
+  box-shadow: var(--appearance-desktop-shadow);
+}
+
+.desktop-page :is(.glass-card[data-level="2"], .glass-card[data-level="3"], .today-link-card, .quick-action-card, .quick-action-pill, .feature-card, .filmstrip-item, .manage-entry-row, .primary-action, .secondary-action, textarea) {
+  border-color: var(--appearance-desktop-border);
+  background: var(--appearance-desktop-clear-bg);
+  box-shadow: var(--appearance-desktop-shadow);
+}
+
+.phone-dock {
+  border-color: var(--appearance-desktop-border) !important;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.18) 0px,
+      rgba(255, 255, 255, 0.18) 1px,
+      rgba(255, 255, 255, 0.025) 2px,
+      rgba(48, 56, 74, 0.06) 4px,
+      rgba(255, 255, 255, 0.02) 6px
+    ),
+    color-mix(in srgb, var(--appearance-desktop-clear-bg), transparent 18%) !important;
+}
+
+.phone-dock :is(.dock-item, .dock-primary, svg, span) {
+  color: var(--appearance-desktop-ink);
+}
+
+.phone-dock :is(.dock-item[data-active="true"], .dock-primary) {
+  background: color-mix(in srgb, var(--appearance-desktop-clear-bg), var(--appearance-desktop-ink) 7%) !important;
+}
+
+.chat-window :is(.chat-header h3, .chat-header p, .messages, .bubble, .special-card, .chat-input, .chat-input input, .chat-plus-panel, .message-menu, svg, button) {
+  color: var(--appearance-chat-ink);
+}
+
+.chat-window :is(.chat-header p, .time-divider, .bubble small, .memory-confirm-card span, .chat-input input::placeholder) {
+  color: var(--appearance-chat-muted);
+}
+
+.chat-window :is(.chat-header, .special-card, .chat-plus-panel, .message-menu) {
+  border-color: var(--appearance-chat-border);
+  background: var(--appearance-chat-frosted-bg);
+  box-shadow: var(--appearance-chat-shadow);
+}
+
+.chat-window :is(.time-divider, .icon-soft-button, .send-button, .mini-button) {
+  border-color: var(--appearance-chat-border);
+  background: var(--appearance-chat-clear-bg);
+  box-shadow: var(--appearance-chat-shadow);
+}
+
+.chat-window .bubble.ai {
+  border: 1px solid var(--appearance-chat-border);
+  background: var(--appearance-chat-ai-bubble);
+  color: var(--appearance-chat-ink);
+}
+
+.chat-window .bubble.user {
+  border: 1px solid var(--appearance-chat-border);
+  background: var(--appearance-chat-user-bubble);
+  color: var(--appearance-chat-ink);
+}
+
+.chat-window .chat-input {
+  border-color: var(--appearance-chat-border);
+  background: var(--appearance-chat-input-bg);
+  box-shadow: var(--appearance-chat-shadow);
+}
+
+.chat-window .chat-input input {
+  color: var(--appearance-chat-ink);
+}
+
+.phone-page-overlay:has(.chat-window) {
+  background: var(--appearance-chat-background) center / cover no-repeat !important;
+}
+
+.phone-page-overlay:has(.chat-window) .chat-window {
+  background: transparent !important;
+}
+
+.desktop-page[data-page="0"]:has(.today-page[data-theme])::before,
+.desktop-page[data-page="0"]:has(.today-page[data-theme])::after,
+.desktop-page[data-page="1"]:has(.companion-page[data-theme])::before,
+.desktop-page[data-page="1"]:has(.companion-page[data-theme])::after,
+.desktop-page:is([data-page="2"], [data-page="3"]):has(:is(.memory-page[data-theme], .manage-page[data-theme]))::before,
+.desktop-page:is([data-page="2"], [data-page="3"]):has(:is(.memory-page[data-theme], .manage-page[data-theme]))::after,
+.phone-page-overlay:has(.chat-window)::before {
+  content: none !important;
+  display: none !important;
+}
+
+.desktop-page .manage-page[data-theme] :is(.profile-card, .manage-section-list, .manage-entry-row) {
+  border-color: var(--appearance-desktop-border);
+  background: var(--appearance-desktop-frosted-bg) !important;
+  box-shadow: var(--appearance-desktop-shadow);
+}
+
+.desktop-page .manage-page[data-theme] .manage-entry-row + .manage-entry-row {
+  border-top-color: var(--appearance-desktop-border);
 }

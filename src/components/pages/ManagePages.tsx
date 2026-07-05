@@ -8,7 +8,6 @@ import {
   Eye,
   GearSix,
   IdentificationCard,
-  ImageSquare,
   LockKey,
   PaintBrush,
   ShieldCheck,
@@ -18,6 +17,13 @@ import {
   User,
 } from "@phosphor-icons/react";
 import type { IconType, ManagePageId } from "../../types";
+import {
+  DEFAULT_APPEARANCE_SETTINGS,
+  useAppearance,
+} from "../../appearance";
+import type { AppearanceImageRole, AppearanceSettings, ContrastMode, FontThemeId, OverlayStrength } from "../../appearance";
+import { ImageUploadControl } from "../appearance/ImageUploadControl";
+import { IdentityAvatar } from "../appearance/IdentityAvatar";
 import { useToast } from "../feedback/ToastProvider";
 
 export function ManageSubPage({ page }: { page: ManagePageId }) {
@@ -94,7 +100,7 @@ function ProfileEditPage() {
     <div className="manage-subpage profile-edit-page">
       <PageTitle title="个人档案" subtitle="Profile" />
       <div className="profile-edit-hero glass-card" data-level="1">
-        <div className="profile-orb" aria-hidden="true" />
+        <IdentityAvatar identity="user" className="profile-orb" />
         <div>
           <strong>{profile.name}</strong>
           <span>{profile.intro}</span>
@@ -136,7 +142,7 @@ function CharacterManagePage() {
     <div className="manage-subpage character-page">
       <PageTitle title="角色管理" subtitle="Identity" />
       <article className="character-profile-card glass-card" data-level="1">
-        <IdentificationCard size={28} />
+        <IdentityAvatar identity="ai" className="tiny-avatar" />
         <div>
           <strong>{opened}</strong>
           <span>资料卡、世界书与关系设定都以 Mock 内容展示。</span>
@@ -175,7 +181,7 @@ function UserManagePage() {
     <div className="manage-subpage user-page">
       <PageTitle title="用户管理" subtitle="User" />
       <div className="user-info-card glass-card" data-level="1">
-        <User size={26} />
+        <IdentityAvatar identity="user" className="tiny-avatar" />
         <div>
           <strong>用户资料</strong>
           <span>偏好、作息、重要人物、重要日期与情绪偏好。</span>
@@ -252,34 +258,215 @@ function MemoryManagePage() {
 
 function AppearancePage() {
   const { showToast } = useToast();
-  const [fontSize, setFontSize] = useStoredState("vp-font-size", 16);
+  const {
+    draftSettings,
+    hasUnsavedChanges,
+    setDraftSettings,
+    saveDraftSettings,
+    resetDraftToDefaults,
+    restoreDraftSettings,
+    getImageUrl,
+  } = useAppearance();
   const [saved, setSaved] = useState(false);
-  const [theme, setTheme] = useStoredState("vp-appearance-theme", "浅色玻璃");
+  const desktopPreview = getImageUrl(draftSettings.desktopBackgroundKey);
+  const aiAvatar = getImageUrl(draftSettings.aiAvatarKey);
+  const userAvatar = getImageUrl(draftSettings.userAvatarKey);
+
+  const updateDraft = (patch: Partial<AppearanceSettings>) => {
+    setSaved(false);
+    setDraftSettings((settings) => ({ ...settings, ...patch }));
+  };
+
+  const save = () => {
+    saveDraftSettings();
+    setSaved(true);
+    showToast("success", "外观已保存");
+  };
+
+  const reset = () => {
+    resetDraftToDefaults();
+    setSaved(false);
+    showToast("processing", "已恢复蓝色组默认草稿");
+  };
 
   return (
     <div className="manage-subpage appearance-page">
       <PageTitle title="外观" subtitle="Appearance" />
-      <div className="appearance-preview glass-card" data-level="1" style={{ fontSize }}>
-        <ImageSquare size={28} />
+      <div className="appearance-preview glass-card" data-level="1" style={{ backgroundImage: desktopPreview ? `url(${desktopPreview})` : undefined }}>
+        {aiAvatar && <img className="appearance-avatar-preview" src={aiAvatar} alt="AI 头像预览" />}
         <div>
-          <strong>{theme}</strong>
-          <span>主页背景 · 聊天背景 · 朋友圈背景</span>
+          <strong>实时预览</strong>
+          <span>桌面背景 · 聊天背景 · 头像 · 字体主题</span>
         </div>
+        {userAvatar && <img className="appearance-avatar-preview user" src={userAvatar} alt="用户头像预览" />}
       </div>
-      <div className="visual-option-grid">
-        {["AI 头像", "用户头像", "图标主题", "小组件"].map((item) => (
-          <button className="visual-option theme-pressable" data-active={theme === item} key={item} onClick={() => { setTheme(item); setSaved(false); }}>
-            <PaintBrush size={18} />
-            <span>{item}</span>
+
+      <section className="settings-cluster glass-card" data-level="2">
+        <strong>背景</strong>
+        <AppearanceImageRow
+          label="桌面背景"
+          role="desktopBackground"
+          selectedKey={draftSettings.desktopBackgroundKey}
+          selectedUrl={desktopPreview}
+          onSelectDefault={() => updateDraft({ desktopBackgroundKey: DEFAULT_APPEARANCE_SETTINGS.desktopBackgroundKey })}
+        />
+        <AppearanceImageRow
+          label="聊天背景"
+          role="chatBackground"
+          selectedKey={draftSettings.chatBackgroundKey}
+          selectedUrl={getImageUrl(draftSettings.chatBackgroundKey)}
+          onSelectDefault={() => updateDraft({ chatBackgroundKey: DEFAULT_APPEARANCE_SETTINGS.chatBackgroundKey })}
+        />
+      </section>
+
+      <section className="settings-cluster glass-card" data-level="2">
+        <strong>头像</strong>
+        <AppearanceImageRow
+          label="AI 头像"
+          role="aiAvatar"
+          selectedKey={draftSettings.aiAvatarKey}
+          selectedUrl={aiAvatar}
+          onSelectDefault={() => updateDraft({ aiAvatarKey: DEFAULT_APPEARANCE_SETTINGS.aiAvatarKey })}
+        />
+        <AppearanceImageRow
+          label="用户头像"
+          role="userAvatar"
+          selectedKey={draftSettings.userAvatarKey}
+          selectedUrl={userAvatar}
+          onSelectDefault={() => updateDraft({ userAvatarKey: DEFAULT_APPEARANCE_SETTINGS.userAvatarKey })}
+        />
+      </section>
+
+      <section className="settings-cluster glass-card" data-level="2">
+        <strong>字体</strong>
+        <div className="visual-option-grid">
+          {[
+            ["font-group-1", "字体组 1", "文源宋体 / 爱点风雅黑长体 / 三极素纤简体"],
+            ["font-group-2", "字体组 2", "站酷小薇 LOGO 体 / 寒蝉活黑体 / 三极素纤简体"],
+            ["font-group-3", "字体组 3", "小狼天穹 / 有梦体 / 三极素纤简体"],
+          ].map(([id, label, detail]) => (
+            <button
+              className="visual-option theme-pressable"
+              data-active={draftSettings.fontTheme === id}
+              key={id}
+              onClick={() => updateDraft({ fontTheme: id as FontThemeId })}
+            >
+              <PaintBrush size={18} />
+              <span>
+                <strong>{label}</strong>
+                <small>{detail}</small>
+              </span>
+            </button>
+          ))}
+        </div>
+      </section>
+
+      <section className="settings-cluster glass-card" data-level="2">
+        <strong>自动对比</strong>
+        <AppearanceChoiceRow
+          label="桌面遮罩"
+          value={draftSettings.desktopOverlay}
+          options={[
+            ["soft", "弱"],
+            ["medium", "中"],
+            ["strong", "强"],
+          ]}
+          onSelect={(desktopOverlay) => updateDraft({ desktopOverlay: desktopOverlay as OverlayStrength })}
+        />
+        <AppearanceChoiceRow
+          label="聊天遮罩"
+          value={draftSettings.chatOverlay}
+          options={[
+            ["soft", "弱"],
+            ["medium", "中"],
+            ["strong", "强"],
+          ]}
+          onSelect={(chatOverlay) => updateDraft({ chatOverlay: chatOverlay as OverlayStrength })}
+        />
+        <AppearanceChoiceRow
+          label="桌面对比"
+          value={draftSettings.desktopContrastMode}
+          options={[
+            ["auto", "自动"],
+            ["light-content", "浅字"],
+            ["dark-content", "深字"],
+          ]}
+          onSelect={(desktopContrastMode) => updateDraft({ desktopContrastMode: desktopContrastMode as ContrastMode })}
+        />
+        <AppearanceChoiceRow
+          label="聊天对比"
+          value={draftSettings.chatContrastMode}
+          options={[
+            ["auto", "自动"],
+            ["light-content", "浅字"],
+            ["dark-content", "深字"],
+          ]}
+          onSelect={(chatContrastMode) => updateDraft({ chatContrastMode: chatContrastMode as ContrastMode })}
+        />
+      </section>
+
+      <div className="appearance-action-row">
+        <button className="secondary-action theme-pressable" onClick={() => { restoreDraftSettings(); setSaved(false); }}>
+          放弃修改
+        </button>
+        <button className="secondary-action theme-pressable" onClick={reset}>
+          恢复默认
+        </button>
+        <button className="primary-action theme-pressable" data-active={saved && !hasUnsavedChanges} onClick={save}>
+          {saved && !hasUnsavedChanges ? <CheckCircle size={17} weight="fill" /> : null}
+          {saved && !hasUnsavedChanges ? "已保存" : "保存"}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function AppearanceImageRow({
+  label,
+  role,
+  selectedKey,
+  selectedUrl,
+  onSelectDefault,
+}: {
+  label: string;
+  role: AppearanceImageRole;
+  selectedKey: string;
+  selectedUrl?: string;
+  onSelectDefault: () => void;
+}) {
+  return (
+    <div className="appearance-image-row">
+      <div className="appearance-image-thumb" data-avatar={role === "aiAvatar" || role === "userAvatar"} style={{ backgroundImage: selectedUrl ? `url(${selectedUrl})` : undefined }} />
+      <div>
+        <strong>{label}</strong>
+        <span>{selectedKey.startsWith("custom-") ? "自定义图片" : "默认素材"}</span>
+      </div>
+      <ImageUploadControl role={role} selectedKey={selectedKey} onSelectDefault={onSelectDefault} />
+    </div>
+  );
+}
+
+function AppearanceChoiceRow({
+  label,
+  value,
+  options,
+  onSelect,
+}: {
+  label: string;
+  value: string;
+  options: Array<[string, string]>;
+  onSelect: (value: string) => void;
+}) {
+  return (
+    <div className="appearance-choice-row">
+      <span>{label}</span>
+      <div className="visual-option-grid compact">
+        {options.map(([id, optionLabel]) => (
+          <button className="tag-chip theme-pressable" data-active={value === id} key={id} onClick={() => onSelect(id)}>
+            {optionLabel}
           </button>
         ))}
       </div>
-      <label className="range-field">
-        <span>字号 {fontSize}px</span>
-        <input type="range" min="14" max="20" value={fontSize} onChange={(event) => { setFontSize(Number(event.target.value)); setSaved(false); }} />
-      </label>
-      <EmptyState title="收藏图标暂无内容" action="选择图标" onAction={() => showToast("processing", "图标选择为 Mock 演示")} />
-      <SaveButton saved={saved} onSave={() => { setSaved(true); showToast("success", "外观已保存"); }} />
     </div>
   );
 }

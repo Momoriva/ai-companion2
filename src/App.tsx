@@ -13,6 +13,7 @@ import { MoodPage } from "./components/pages/MoodPage";
 import { QuickActionPage } from "./components/pages/QuickActionPages";
 import { Dock } from "./components/layout/Dock";
 import { PhoneShell } from "./components/layout/PhoneShell";
+import { AppearanceProvider } from "./appearance";
 import {
   CompanionLayout,
   DesktopPage,
@@ -22,12 +23,15 @@ import {
 } from "./components/layout/PageLayouts";
 
 type PreviewMode = "full" | "phone";
-type TodayTheme = "aurora-dark" | "aurora-light";
+type TodayTheme = "aurora-light";
+const AURORA_THEME: TodayTheme = "aurora-light";
 
 function App() {
   return (
     <ToastProvider>
-      <VirtualPhoneApp />
+      <AppearanceProvider>
+        <VirtualPhoneApp />
+      </AppearanceProvider>
     </ToastProvider>
   );
 }
@@ -36,7 +40,6 @@ function VirtualPhoneApp() {
   const { showToast } = useToast();
   const [page, setPage] = useState<PageId>(0);
   const [theme, setTheme] = useState<ThemeId>("monochrome-base");
-  const [todayTheme, setTodayTheme] = useState<TodayTheme>("aurora-dark");
   const [previewMode, setPreviewMode] = useState<PreviewMode>("full");
   const [overlay, setOverlay] = useState<Overlay>(null);
   const [dragStart, setDragStart] = useState<number | null>(null);
@@ -122,7 +125,7 @@ function VirtualPhoneApp() {
   };
 
   return (
-    <main className="app-shell theme-page" data-preview-mode={previewMode} data-aurora-theme={todayTheme}>
+    <main className="app-shell theme-page" data-preview-mode={previewMode} data-aurora-theme={AURORA_THEME}>
       <section className="preview-stage" aria-label="Virtual Phone Light Base Preview">
         <aside className="preview-intro">
           <p>Virtual Phone · Light Base Preview</p>
@@ -143,33 +146,25 @@ function VirtualPhoneApp() {
               仅手机
             </button>
           </div>
-          <div className="today-theme-switch" aria-label="Today aurora theme">
-            <button className="theme-pill theme-pressable" data-active={todayTheme === "aurora-dark"} onClick={() => setTodayTheme("aurora-dark")}>
-              Aurora Dark
-            </button>
-            <button className="theme-pill theme-pressable" data-active={todayTheme === "aurora-light"} onClick={() => setTodayTheme("aurora-light")}>
-              Aurora Light
-            </button>
-          </div>
         </aside>
 
-        <PhoneShell auroraTheme={todayTheme} onPointerDown={handlePointerDown} onPointerUp={handlePointerUp}>
+        <PhoneShell auroraTheme={AURORA_THEME} onPointerDown={handlePointerDown} onPointerUp={handlePointerUp}>
           <div className="desktop-track" style={{ transform: `translateX(-${page * 100}%)` }}>
             {pages.map((desktop) => {
               const features = featureGroups.filter((feature) => feature.page === desktop.id);
               return (
                 <DesktopPage key={desktop.id} pageId={desktop.id} active={page === desktop.id} title={desktop.title} description={desktop.description}>
-                  {desktop.id === 0 && <TodayLayout features={features} todayTheme={todayTheme} {...layoutProps} />}
-                  {desktop.id === 1 && <CompanionLayout features={features} todayTheme={todayTheme} {...layoutProps} />}
-                  {desktop.id === 2 && <MemoryLayout features={features} todayTheme={todayTheme} {...layoutProps} />}
-                  {desktop.id === 3 && <ManageLayout features={features} todayTheme={todayTheme} {...layoutProps} />}
+                  {desktop.id === 0 && <TodayLayout features={features} todayTheme={AURORA_THEME} {...layoutProps} />}
+                  {desktop.id === 1 && <CompanionLayout features={features} todayTheme={AURORA_THEME} {...layoutProps} />}
+                  {desktop.id === 2 && <MemoryLayout features={features} todayTheme={AURORA_THEME} {...layoutProps} />}
+                  {desktop.id === 3 && <ManageLayout features={features} todayTheme={AURORA_THEME} {...layoutProps} />}
                 </DesktopPage>
               );
             })}
           </div>
           <PageIndicator current={page} onChange={switchPage} />
           <Dock page={page} chatActive={overlay?.type === "chat"} onPageChange={switchPage} onOpenChat={() => openOverlay({ type: "chat" })} />
-          {overlay && <PhoneOverlay overlay={overlay} auroraTheme={todayTheme} onClose={closeOverlay} setPage={switchPage} />}
+          {overlay && <PhoneOverlay overlay={overlay} auroraTheme={AURORA_THEME} onClose={closeOverlay} setPage={switchPage} />}
         </PhoneShell>
 
         <aside className="preview-notes">

@@ -16,6 +16,7 @@ import {
 } from "@phosphor-icons/react";
 import { SendLetterMotion } from "../motion/SendLetterMotion";
 import { useToast } from "../feedback/ToastProvider";
+import { IdentityAvatar } from "../appearance/IdentityAvatar";
 
 type MessageKind = "text" | "image" | "voice" | "web" | "activity" | "memory";
 type Message = {
@@ -127,7 +128,7 @@ export function ChatPage() {
   return (
     <div className="chat-window chat-wechat">
       <div className="chat-header">
-        <div className="tiny-avatar">AI</div>
+        <IdentityAvatar identity="ai" className="tiny-avatar" />
         <div>
           <h3>ta</h3>
           <p>在线 · 轻声回复中</p>
@@ -141,7 +142,7 @@ export function ChatPage() {
         <div className="time-divider">今天 09:41</div>
         {messages.map((message) => (
           <div className={`chat-message-row ${message.from}`} key={message.id}>
-            {message.from === "ai" && <div className="message-avatar">AI</div>}
+            {message.from === "ai" && <IdentityAvatar identity="ai" className="message-avatar" />}
             <div
               className={`bubble ${message.from}`}
               data-kind={message.kind}
@@ -160,6 +161,7 @@ export function ChatPage() {
               {message.kind === "text" && <span>{message.text}</span>}
               {message.status && <small>{message.status === "sending" ? "发送中" : "已发送"}</small>}
             </div>
+            {message.from === "user" && <IdentityAvatar identity="user" className="message-avatar user-avatar" />}
           </div>
         ))}
 
